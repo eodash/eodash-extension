@@ -7,8 +7,9 @@
 - **Owner**: @eodash
 <!-- - **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json> -->
 
-This document explains the eodash STAC Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-The extension provides a set of properties to enrich STAC Collections and Items with metadata necessary for the [eodash](https://github.com/eodash/eodash) visualization client. These properties enable advanced, interactive features including:
+This document explains the eodash STAC Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification
+The extension provides a set of properties to enrich STAC Collections and Items with metadata necessary for the [eodash](https://github.com/eodash/eodash) visualization client.
+These properties enable advanced, interactive features including:
 
 - Dynamically generated user-interface forms for data processing.  
 - Client-side rendering of charts and data visualizations.  
@@ -16,7 +17,6 @@ The extension provides a set of properties to enrich STAC Collections and Items 
 - Application of custom color legends, and dynamic user-configurable styling.
 
 For more extensions and concepts not covered by this extension specification and needed by eodash, refer to **[eodash STAC Documentation](https://github.com/eodash/eodash/blob/main/docs/STAC.md)**.
-
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -71,7 +71,8 @@ These fields can be applied to STAC Assets (in Collections or Items).
 | eodash:proj4\_def | [Projection Object](#projection-object) | Defines a custom Proj4 projection for the asset data. |
 | eox:flatstyle | string \| object | A URL pointing to a style JSON object or the style object itself for dynamic asset styling. |
 
-**Note**: For data assets, styling is typically provided through links with `rel: "style"` rather than directly on the asset. The style link's `href` points to an OpenLayers Flat Style definition, and `asset:keys` specifies which assets the style applies to.
+**Note**: For data assets, styling is typically provided through links with `rel: "style"` rather than directly on the asset.
+The style link's `href` points to an OpenLayers Flat Style definition, and `asset:keys` specifies which assets the style applies to.
 
 ### **Projection Object**
 
@@ -98,7 +99,6 @@ The `eox:colorlegend` property uses the following object structure:
 | ticks | number | **OPTIONAL**. Approximate number of ticks to display on the legend. |
 | tickValues | \[number\] | **OPTIONAL**. Explicit array of values where ticks should be placed, overriding automatic tick generation. |
 | markType | string | **OPTIONAL**. Visual style of the legend marks. Implementation-specific values. |
-
 
 ## Related Extensions and Standards
 
