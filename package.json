@@ -1,6 +1,6 @@
 {
-  "name": "stac-extension-template",
-  "version": "1.0.0",
+  "name": "stac-extension-eodash",
+  "version": "0.1.0",
   "scripts": {
     "test": "npm run check-markdown && npm run check-examples",
     "check-markdown": "remark . -f -r .github/remark.yaml",
