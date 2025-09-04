@@ -1,73 +1,129 @@
 {
-  "stac_version": "1.0.0",
+  "stac_version": "1.1.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/eodash/v0.1.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
   ],
   "type": "Collection",
-  "id": "collection",
-  "title": "A title",
-  "description": "A description",
-  "license": "Apache-2.0",
+  "id": "ID",
+  "title": "Title",
+  "description": "Description",
+  "license": "other",
   "extent": {
     "spatial": {
       "bbox": [
         [
-          172.9,
-          1.3,
-          173,
-          1.4
+          -180,
+          -90,
+          180,
+          -60
         ]
       ]
     },
     "temporal": {
       "interval": [
         [
-          "2015-06-23T00:00:00Z",
-          null
+          "2012-07-04T11:59:30Z",
+          "2024-07-31T11:59:30Z"
         ]
       ]
     }
   },
-  "template:new_field": "test",
-  "template:xyz": {
-    "x": 1,
-    "y": 2,
-    "z": 3
-  },
-  "template:another_one": [
-    1,
-    2,
-    3
+  "themes": [
+    "cryosphere"
   ],
-  "assets": {
-    "example": {
-      "href": "https://example.com/examples/file.xyz",
-      "template:new_field": "test"
-    }
+  "satellite": [
+    "GCOM-W"
+  ],
+  "sensor": [
+    "AMSR2"
+  ],
+  "agency": [
+    "JAXA"
+  ],
+  "eodash:mapProjection": {
+    "name": "EPSG:3031",
+    "def": "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +type=crs",
+    "extent": [
+      -3299207.53,
+      -3333134.03,
+      3299207.53,
+      3333134.03
+    ]
   },
-  "item_assets": {
-    "data": {
-      "roles": [
-        "data"
-      ],
-      "template:new_field": "test"
-    }
-  },
-  "summaries": {
-    "datetime": {
-      "minimum": "2015-06-23T00:00:00Z",
-      "maximum": "2019-07-10T13:44:56Z"
-    }
+  "eodash:jsonform": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/form.json",
+  "eodash:vegadefinition": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/chart.json",
+  "eox:colorlegend": {
+    "domain": [
+      50,
+      60,
+      70,
+      80,
+      90,
+      100
+    ],
+    "range": [
+      "#4040ff",
+      "#4646ff",
+      "#6262ff",
+      "#9999ff",
+      "#d1d1ff",
+      "#ffffff"
+    ],
+    "scaleType": "continuous",
+    "tickFormat": ".0f",
+    "title": "Percentage"
   },
   "links": [
     {
-      "href": "https://example.com/examples/collection.json",
-      "rel": "self"
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json",
+      "title": "Earth Observing Dashboard"
     },
     {
-      "href": "https://example.com/examples/item.json",
-      "rel": "item"
+      "rel": "service",
+      "href": "https://xcube-geodb.brockmann-consult.de/eodash/sea-ice-data?aoi={{bbox}}&time={{datetime}}&threshold={{ice_threshold}}",
+      "type": "application/json",
+      "title": "Sea Ice Analysis Service",
+      "method": "GET"
+    },
+    {
+      "rel": "wms",
+      "href": "//maps.bas.ac.uk/antarctic/wms",
+      "type": "image/png",
+      "title": "Antarctic hilshade, bathymetry",
+      "roles": [
+        "baselayer",
+        "visible"
+      ],
+      "wms:layers": [
+        "add:antarctic_hillshade_and_bathymetry"
+      ],
+      "eodash:proj4_def": {
+        "name": "EPSG:3031",
+        "def": "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +type=crs"
+      }
+    },
+    {
+      "rel": "xyz",
+      "href": "//s2maps-tiles.eu/wmts/1.0.0/osm_3857/default/g/{z}/{y}/{x}.jpeg",
+      "type": "image/jpeg",
+      "title": "OSM Background",
+      "roles": [
+        "baselayer",
+        "invisible"
+      ]
     }
-  ]
+  ],
+  "assets": {
+    "thumbnail": {
+      "href": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/Antarctic-N12.jpg",
+      "type": "image/png",
+      "roles": [
+        "thumbnail"
+      ]
+    }
+  }
 }
