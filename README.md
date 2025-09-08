@@ -1,14 +1,22 @@
-# Template Extension Specification
+# **eodash STAC Extension Specification**
 
-- **Title:** Template
-- **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json>
-- **Field Name Prefix:** template
-- **Scope:** Item, Collection
+- **Title:** eodash STAC extension
+- **Field Name Prefix:** eodash, eox  
+- **Scope:** Collection, Item, Link, Asset  
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @your-gh-handles @person2
+- **Owner**: @eodash
+<!-- - **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json> -->
 
-This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-This is the place to add a short introduction.
+This document explains the eodash STAC Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification
+The extension provides a set of properties to enrich STAC Collections and Items with metadata necessary for the [eodash](https://github.com/eodash/eodash) visualization client.
+These properties enable advanced, interactive features including:
+
+- Dynamically generated user-interface forms for data processing.  
+- Client-side rendering of charts and data visualizations.  
+- Support for custom map projections.  
+- Application of custom color legends, and dynamic user-configurable styling.
+
+For more extensions and concepts not covered by this extension specification and needed by eodash, refer to **[eodash STAC Documentation](https://github.com/eodash/eodash/blob/main/docs/STAC.md)**.
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -18,44 +26,89 @@ This is the place to add a short introduction.
 
 ## Fields
 
-The fields in the table below can be used in these parts of STAC documents:
+The fields below can be used in these parts of STAC documents:
 
 - [ ] Catalogs
 - [x] Collections
-- [x] Item Properties (incl. Summaries in Collections)
-- [x] Assets (for both Collections and Items, incl. Item Asset Definitions in Collections)
-- [ ] Links
+- [x] Items
+- [x] Assets
+- [x] Links
 
-| Field Name           | Type                      | Description                                  |
-| -------------------- | ------------------------- | -------------------------------------------- |
-| template:new_field   | string                    | **REQUIRED**. Describe the required field... |
-| template:xyz         | [XYZ Object](#xyz-object) | Describe the field...                        |
-| template:another_one | \[number]                 | Describe the field...                        |
+### **Collection Fields**
 
-### Additional Field Information
+These fields can be applied to the top-level of a STAC Collection object.
 
-#### template:new_field
+| Field Name | Type | Description |
+| :---- | :---- | :---- |
+| eodash:mapProjection | [Projection Object](#projection-object) | Defines a custom map projection that the client can register and use for displaying data. This is essential for visualizing data in non-standard coordinate reference systems (e.g., polar stereographic). |
+| eodash:jsonform | string | A URL pointing to a JSON Schema file. eodash uses this schema to dynamically generate a user interface form, allowing users to input parameters for data processing services. |
+| eodash:vegadefinition | string | A URL pointing to a [Vega](https://vega.github.io/vega/) or [Vega-Lite](https://vega.github.io/vega-lite/) JSON definition. eodash uses this to render charts from data returned by a service. |
+| eox:colorlegend | [Color Legend Object](#color-legend-object) | Defines a custom color legend for client-side styling of rendered data |
 
-This is a much more detailed description of the field `template:new_field`...
+### **Item Fields**
 
-### XYZ Object
+These fields can be applied at the top level of STAC Items.
 
-This is the introduction for the purpose and the content of the XYZ Object...
+| Field Name | Type | Description |
+| :---- | :---- | :---- |
+| eodash:proj4\_def | [Projection Object](#projection-object) | Defines a custom Proj4 projection for the item data. |
 
-| Field Name | Type   | Description                                  |
-| ---------- | ------ | -------------------------------------------- |
-| x          | number | **REQUIRED**. Describe the required field... |
-| y          | number | **REQUIRED**. Describe the required field... |
-| z          | number | **REQUIRED**. Describe the required field... |
+### **Link Fields**
 
-## Relation types
+These fields can be applied to STAC Links (in Collections, Items, or Catalogs).
 
-The following types should be used as applicable `rel` types in the
-[Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
+| Field Name | Type | Description |
+| :---- | :---- | :---- |
+| eodash:proj4\_def | [Projection Object](#projection-object) | Defines a custom Proj4 projection for the linked resource. Commonly used in WMS links to specify the coordinate reference system. |
+| eox:flatstyle | string \| object | A URL pointing to a JSON object that extends [OpenLayers Flat Styles](https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html), or the style object itself. Used for dynamic styling of web map links (WMS, WMTS, XYZ) and service links. |
 
-| Type           | Description                           |
-| -------------- | ------------------------------------- |
-| fancy-rel-type | This link points to a fancy resource. |
+### **Asset Fields**
+
+These fields can be applied to STAC Assets (in Collections or Items).
+
+| Field Name | Type | Description |
+| :---- | :---- | :---- |
+| eodash:proj4\_def | [Projection Object](#projection-object) | Defines a custom Proj4 projection for the asset data. |
+| eox:flatstyle | string \| object | A URL pointing to a style JSON object or the style object itself for dynamic asset styling. |
+
+**Note**: For data assets, styling is typically provided through links with `rel: "style"` rather than directly on the asset.
+The style link's `href` points to an OpenLayers Flat Style definition, and `asset:keys` specifies which assets the style applies to.
+
+### **Projection Object**
+
+Both `eodash:mapProjection` and `eodash:proj4_def` use the same object structure:
+
+| Field Name | Type | Description |
+| :---- | :---- | :---- |
+| name | string | **REQUIRED**. A unique identifier for the projection (e.g., "EPSG:3031" or a custom name like "ORTHO:320500"). |
+| def | string | **REQUIRED**. The Proj4 definition string specifying the projection parameters. |
+| extent | \[number\] | **OPTIONAL**. The valid coordinate bounds as \[minX, minY, maxX, maxY\] in the projection's units. |
+
+### **Color Legend Object**
+
+The `eox:colorlegend` property uses the following object structure:
+
+| Field Name | Type | Description |
+| :---- | :---- | :---- |
+| domain | \[number\] | **REQUIRED**. Array of numeric values defining the input domain for the color scale. |
+| range | \[string\] | **REQUIRED**. Array of color values (hex codes, CSS colors) corresponding to the domain values. |
+| scaleType | string | **OPTIONAL**. Type of scale to use. Valid values: `"linear"`, `"log"`, `"pow"`, `"sqrt"`, `"symlog"`, `"continuous"`, `"discrete"`. Default is `"linear"`. |
+| title | string | **OPTIONAL**. Title text displayed with the color legend. |
+| tickFormat | string | **OPTIONAL**. Format string for tick labels (e.g., `".0f"` for integers, `".2f"` for two decimal places). |
+| width | number | **OPTIONAL**. Width of the color legend in pixels. |
+| ticks | number | **OPTIONAL**. Approximate number of ticks to display on the legend. |
+| tickValues | \[number\] | **OPTIONAL**. Explicit array of values where ticks should be placed, overriding automatic tick generation. |
+| markType | string | **OPTIONAL**. Visual style of the legend marks. Implementation-specific values. |
+
+## Related Extensions and Standards
+
+This extension is designed to work with several other STAC extensions and standards:
+
+- **[Projection Extension](https://github.com/stac-extensions/projection)**: For standard EPSG coordinate reference systems using `proj:epsg`
+- **[Web Map Links Extension](https://github.com/stac-extensions/web-map-links)**: For map service links (WMS, WMTS, XYZ) with additional properties like `endpoint`, `method`, and `wmts:layer`
+- **[Render Extension](https://github.com/stac-extensions/render)**: For visualization and styling metadata
+
+For additional metadata properties used by eodash (such as `locations`, service configuration, and observation point handling), see the [eodash STAC documentation](https://github.com/eodash/eodash/blob/main/docs/STAC.md).
 
 ## Contributing
 
