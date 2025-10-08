@@ -129,6 +129,11 @@
                 "eodash:mapProjection": {
                     "$ref": "#/definitions/projection_object"
                 },
+                "eodash:rasterform":{
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL to a Raster Form schema for manipulating tile URLs"
+                },
                 "eodash:jsonform": {
                     "type": "string",
                     "format": "uri",

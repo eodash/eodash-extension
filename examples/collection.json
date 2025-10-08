@@ -53,6 +53,7 @@
     ]
   },
   "eodash:jsonform": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/form.json",
+  "eodash:rasterform": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/rasterform.json",
   "eodash:vegadefinition": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/chart.json",
   "eox:colorlegend": {
     "domain": [
