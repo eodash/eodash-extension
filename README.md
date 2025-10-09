@@ -5,7 +5,7 @@
 - **Scope:** Collection, Item, Link, Asset  
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @eodash
-<!-- - **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json> -->
+<!-- - **Identifier:** <https://eodash.github.io/eodash-extention/v0.1/schema.json> -->
 
 This document explains the eodash STAC Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification
 The extension provides a set of properties to enrich STAC Collections and Items with metadata necessary for the [eodash](https://github.com/eodash/eodash) visualization client.
@@ -16,7 +16,7 @@ These properties enable advanced, interactive features including:
 - Support for custom map projections.  
 - Application of custom color legends, and dynamic user-configurable styling.
 
-For more extensions and concepts not covered by this extension specification and needed by eodash, refer to **[eodash STAC Documentation](https://github.com/eodash/eodash/blob/main/docs/STAC.md)**.
+For more extensions and concepts not covered by this extension specification and needed by eodash, refer to **[eodash STAC Documentation](https://eodash.github.io/eodash/STAC.html)**.
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -42,6 +42,7 @@ These fields can be applied to the top-level of a STAC Collection object.
 | :---- | :---- | :---- |
 | eodash:mapProjection | [Projection Object](#projection-object) | Defines a custom map projection that the client can register and use for displaying data. This is essential for visualizing data in non-standard coordinate reference systems (e.g., polar stereographic). |
 | eodash:jsonform | string | A URL pointing to a JSON Schema file. eodash uses this schema to dynamically generate a user interface form, allowing users to input parameters for data processing services. |
+| eodash:rasterform | string | A URL pointing to a JSON Schema and legend configuration file. eodash uses this schema to dynamically generate a user interface form, allowing users to change tile URLs parameters |
 | eodash:vegadefinition | string | A URL pointing to a [Vega](https://vega.github.io/vega/) or [Vega-Lite](https://vega.github.io/vega-lite/) JSON definition. eodash uses this to render charts from data returned by a service. |
 | eox:colorlegend | [Color Legend Object](#color-legend-object) | Defines a custom color legend for client-side styling of rendered data |
 
@@ -108,7 +109,7 @@ This extension is designed to work with several other STAC extensions and standa
 - **[Web Map Links Extension](https://github.com/stac-extensions/web-map-links)**: For map service links (WMS, WMTS, XYZ) with additional properties like `endpoint`, `method`, and `wmts:layer`
 - **[Render Extension](https://github.com/stac-extensions/render)**: For visualization and styling metadata
 
-For additional metadata properties used by eodash (such as `locations`, service configuration, and observation point handling), see the [eodash STAC documentation](https://github.com/eodash/eodash/blob/main/docs/STAC.md).
+For additional metadata properties used by eodash (such as `locations`, service configuration, and observation point handling), see the [eodash STAC documentation](https://eodash.github.io/eodash/STAC.html).
 
 ## Contributing
 
