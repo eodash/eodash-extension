@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://stac-extensions.github.io/eodash/v0.1.0/schema.json#",
     "title": "eodash Extension",
-    "description": "STAC eodash Extension for STAC Items, Collections, and Links providing visualization and data processing capabilities",
+    "description": "STAC eodash Extension for STAC Collections, Assets, and Links providing interactive visualization and data processing capabilities",
     "oneOf": [
         {
             "$comment": "This is the schema for STAC Items.",
@@ -20,9 +20,6 @@
                     "properties": {
                         "type": {
                             "const": "Feature"
-                        },
-                        "eodash:proj4_def": {
-                            "$ref": "#/definitions/projection_object"
                         },
                         "properties": {
                             "type": "object"
@@ -118,7 +115,7 @@
             "type": "object",
             "properties": {},
             "patternProperties": {
-                "^(?!eodash:|eox:)": {}
+                "^(?!eodash:)": {}
             },
             "additionalProperties": true
         },
@@ -144,7 +141,7 @@
                     "format": "uri",
                     "description": "URL to a Vega or Vega-Lite chart definition for data visualization"
                 },
-                "eox:colorlegend": {
+                "eodash:colorlegend": {
                     "type": "object",
                     "description": "Color legend configuration object",
                     "properties": {
@@ -227,7 +224,7 @@
                         "range"
                     ]
                 },
-                "eox:flatstyle": {
+                "eodash:flatstyle": {
                     "type": "string",
                     "format": "uri",
                     "description": "URL to an OpenLayers Flat Style definition"
@@ -238,10 +235,6 @@
             "$comment": "Fields that can appear in Links.",
             "type": "object",
             "properties": {
-                "eodash:proj4_def": {
-                    "$ref": "#/definitions/projection_object",
-                    "description": "Proj4 projection definition for coordinate reference system"
-                },
                 "asset:keys": {
                     "type": "array",
                     "items": {
@@ -249,7 +242,7 @@
                     },
                     "description": "Array of asset keys that this link applies to (used with rel: style)"
                 },
-                "eox:flatstyle": {
+                "eodash:flatstyle": {
                     "type": "string",
                     "format": "uri",
                     "description": "URL to an OpenLayers Flat Style definition"

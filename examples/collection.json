@@ -3,7 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eodash/v0.1.0/schema.json",
     "https://stac-extensions.github.io/web-map-links/v1.1.0/schema.json",
-    "https://stac-extensions.github.io/projection/v1.1.0/schema.json"
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
   ],
   "type": "Collection",
   "id": "ID",
@@ -55,7 +55,7 @@
   "eodash:jsonform": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/form.json",
   "eodash:rasterform": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/rasterform.json",
   "eodash:vegadefinition": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration/chart.json",
-  "eox:colorlegend": {
+  "eodash:colorlegend": {
     "domain": [
       50,
       60,
@@ -102,10 +102,7 @@
       "wms:layers": [
         "add:antarctic_hillshade_and_bathymetry"
       ],
-      "eodash:proj4_def": {
-        "name": "EPSG:3031",
-        "def": "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +type=crs"
-      }
+      "proj:code": "EPSG:3031"
     },
     {
       "rel": "xyz",

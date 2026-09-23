@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- `eox:colorlegend` renamed to `eodash:colorlegend`
+- `eox:flatstyle` renamed to `eodash:flatstyle`
+- Generalized the wording so that the extension can be implemented by any client, eodash being one implementation
+
+### Removed
+- `eodash:proj4_def` in favor of the fields of the Projection Extension (`proj:code`, `proj:wkt2`, `proj:projjson`)
+
 ## [0.2.0](https://github.com/eodash/eodash-extension/tree/v0.2)
 
 ### Added
@@ -22,4 +32,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-[Unreleased](https://github.com/eodash/eodash-extension/compare/main...v0.1)
+[Unreleased]: https://github.com/eodash/eodash-extension/compare/v0.2...main
