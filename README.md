@@ -1,4 +1,4 @@
-# Interactive Dashboard (eodash) Extension Specification
+# Interactive Dashboards (eodash) Extension Specification
 
 - **Title:** Interactive Dashboards (eodash)
 - **Field Name Prefix:** eodash
@@ -34,7 +34,7 @@ The fields below can be used in these parts of STAC documents:
 
 - [ ] Catalogs
 - [x] Collections
-- [ ] Items
+- [x] Items
 - [x] Assets
 - [x] Links
 

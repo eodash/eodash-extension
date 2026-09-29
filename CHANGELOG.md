@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - `eodash:proj4_def` in favor of the fields of the Projection Extension (`proj:code`, `proj:wkt2`, `proj:projjson`)
 
-## [0.2.0](https://github.com/eodash/eodash-extension/tree/v0.2)
+## [0.2.0](https://github.com/eodash/eodash-extension/tree/v0.2.0)
 
 ### Added
 - `eodash:rasterform` to collections
