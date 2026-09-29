@@ -5,7 +5,7 @@
 - **Scope:** Collection, Item, Link, Asset
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @eodash
-- **Identifier:** <https://eodash.github.io/eodash-extention/v0.1/schema.json>
+- **Identifier:** <https://eodash.github.io/eodash-extension/v0.2.0/schema.json>
 
 This document explains the Interactive Dashboards (eodash) Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 The extension provides a set of fields to enrich STAC Collections, Items, Assets and Links with metadata
