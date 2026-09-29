@@ -7,7 +7,8 @@
 - **Owner**: @eodash
 - **Identifier:** <https://eodash.github.io/eodash-extension/v0.2.0/schema.json>
 
-This document explains the Interactive Dashboards (eodash) Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
+This document explains the Interactive Dashboards (eodash) Extension to the
+[SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
 The extension provides a set of fields to enrich STAC Collections, Items, Assets and Links with metadata
 that enables clients to offer interactive visualization and data processing capabilities, including:
 
@@ -38,9 +39,9 @@ The fields below can be used in these parts of STAC documents:
 - [x] Assets
 - [x] Links
 
-### Collection Fields
+### Collection and Item Fields
 
-These fields can be applied to the top-level of a STAC Collection object.
+These fields can be applied to the top-level of a STAC Collection and to the properties of a STAC Item.
 
 | Field Name | Type | Description |
 | :---- | :---- | :---- |
@@ -49,6 +50,7 @@ These fields can be applied to the top-level of a STAC Collection object.
 | eodash:rasterform | string | A URL pointing to a JSON Schema and legend configuration file. Clients can use this schema to dynamically generate a user interface form, allowing users to change the parameters of tile URLs. |
 | eodash:vegadefinition | string | A URL pointing to a [Vega](https://vega.github.io/vega/) or [Vega-Lite](https://vega.github.io/vega-lite/) JSON definition. Clients can use this to render charts from data returned by a service. |
 | eodash:colorlegend | [Color Legend Object](#color-legend-object) | Defines a custom color legend for client-side styling of rendered data |
+| eodash:flatstyle | string \| object | A URL pointing to a JSON object that extends [OpenLayers Flat Styles](https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html), or the style object itself. Used for dynamic styling of the data in the Collection or Item. |
 
 ### Link Fields
 
@@ -93,9 +95,9 @@ The `eodash:colorlegend` field uses the following object structure:
 | range | \[string\] | **REQUIRED**. Array of color values (hex codes, CSS colors) corresponding to the domain values. |
 | scaleType | string | **OPTIONAL**. Type of scale to use. Valid values: `"linear"`, `"log"`, `"pow"`, `"sqrt"`, `"symlog"`, `"continuous"`, `"discrete"`. Default is `"linear"`. |
 | title | string | **OPTIONAL**. Title text displayed with the color legend. |
-| tickFormat | string | **OPTIONAL**. Format string for tick labels (e.g., `".0f"` for integers, `".2f"` for two decimal places). |
+| tickFormat | string \| object | **OPTIONAL**. Format string for tick labels (e.g., `".0f"` for integers, `".2f"` for two decimal places). |
 | width | number | **OPTIONAL**. Width of the color legend in pixels. |
-| ticks | number | **OPTIONAL**. Approximate number of ticks to display on the legend. |
+| ticks | number \| \[number\] | **OPTIONAL**. Approximate number of ticks to display on the legend, or an array of tick values. |
 | tickValues | \[number\] | **OPTIONAL**. Explicit array of values where ticks should be placed, overriding automatic tick generation. |
 | markType | string | **OPTIONAL**. Visual style of the legend marks. Implementation-specific values. |
 
@@ -108,7 +110,8 @@ This extension is designed to work with several other STAC extensions and standa
 - **[Web Map Links Extension](https://github.com/stac-extensions/web-map-links)**: For map service links such as WMS, WMTS, XYZ, etc.
 - **[Render Extension](https://github.com/stac-extensions/render)**: For visualization and styling metadata
 
-For additional metadata properties used by the eodash implementation (such as `locations`, service configuration, and observation point handling), see the [eodash STAC documentation](https://eodash.github.io/eodash/STAC.html).
+For additional metadata properties used by the eodash implementation
+(such as `locations`, service configuration, and observation point handling), see the [eodash STAC documentation](https://eodash.github.io/eodash/STAC.html).
 
 ## Contributing
 
