@@ -1,8 +1,9 @@
 {
   "stac_version": "1.1.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/eodash/v0.1.0/schema.json",
-    "https://stac-extensions.github.io/web-map-links/v1.1.0/schema.json"
+    "https://eodash.github.io/eodash-extension/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
   ],
   "type": "Feature",
   "id": "N12_sea_ice_concentration_antarctic_2021-01-01",
@@ -12,10 +13,6 @@
     180,
     -60
   ],
-  "eodash:proj4_def": {
-    "name": "EPSG:3031",
-    "def": "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +type=crs"
-  },
   "geometry": {
     "type": "Polygon",
     "coordinates": [
@@ -55,6 +52,7 @@
       "SSMIS"
     ],
     "gsd": 25000,
+    "eodash:rasterform": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration_antarctic/rasterform.json",
     "eo:cloud_cover": null
   },
   "links": [
@@ -90,10 +88,7 @@
       "wms:styles": [
         "default"
       ],
-      "eodash:proj4_def": {
-        "name": "EPSG:3031",
-        "def": "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +type=crs"
-      }
+      "proj:code": "EPSG:3031"
     }
   ],
   "assets": {
@@ -104,7 +99,7 @@
       "roles": [
         "data"
       ],
-      "proj:epsg": 3031
+      "proj:code": "EPSG:3031"
     },
     "thumbnail": {
       "href": "https://raw.githubusercontent.com/eurodatacube/eodash-assets/main/collections/N12_sea_ice_concentration_antarctic/N12_sea_ice_concentration_antarctic.jpg",

@@ -1,287 +1,281 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://stac-extensions.github.io/eodash/v0.1.0/schema.json#",
-    "title": "eodash Extension",
-    "description": "STAC eodash Extension for STAC Items, Collections, and Links providing visualization and data processing capabilities",
-    "oneOf": [
-        {
-            "$comment": "This is the schema for STAC Items.",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/stac_extensions"
-                },
-                {
-                    "type": "object",
-                    "required": [
-                        "type",
-                        "properties",
-                        "assets"
-                    ],
-                    "properties": {
-                        "type": {
-                            "const": "Feature"
-                        },
-                        "eodash:proj4_def": {
-                            "$ref": "#/definitions/projection_object"
-                        },
-                        "properties": {
-                            "type": "object"
-                        },
-                        "assets": {
-                            "$comment": "This validates the fields in Item Assets, but does not require them.",
-                            "type": "object",
-                            "additionalProperties": {
-                                "$ref": "#/definitions/fields"
-                            }
-                        },
-                        "links": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/link_fields"
-                            }
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "$comment": "This is the schema for STAC Collections.",
-            "type": "object",
-            "allOf": [
-                {
-                    "required": [
-                        "type"
-                    ],
-                    "properties": {
-                        "type": {
-                            "const": "Collection"
-                        }
-                    }
-                },
-                {
-                    "$ref": "#/definitions/stac_extensions"
-                }
-            ],
-            "anyOf": [
-                {
-                    "$comment": "This is the schema for the top-level fields in a Collection",
-                    "$ref": "#/definitions/collection_fields"
-                },
-                {
-                    "$comment": "This validates the fields in Collection Assets, but does not require them.",
-                    "required": [
-                        "assets"
-                    ],
-                    "properties": {
-                        "assets": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "$ref": "#/definitions/fields"
-                            }
-                        }
-                    }
-                },
-                {
-                    "$comment": "This validates the fields in Collection Links.",
-                    "required": [
-                        "links"
-                    ],
-                    "properties": {
-                        "links": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/link_fields"
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    ],
-    "definitions": {
-        "stac_extensions": {
-            "type": "object",
-            "required": [
-                "stac_extensions"
-            ],
-            "properties": {
-                "stac_extensions": {
-                    "type": "array",
-                    "contains": {
-                        "const": "https://stac-extensions.github.io/eodash/v0.1.0/schema.json"
-                    }
-                }
-            }
-        },
-        "fields": {
-            "$comment": "Common fields that can appear in Items and Assets",
-            "type": "object",
-            "properties": {},
-            "patternProperties": {
-                "^(?!eodash:|eox:)": {}
-            },
-            "additionalProperties": true
-        },
-        "collection_fields": {
-            "$comment": "Fields specific to Collections.",
-            "type": "object",
-            "properties": {
-                "eodash:mapProjection": {
-                    "$ref": "#/definitions/projection_object"
-                },
-                "eodash:rasterform":{
-                    "type": "string",
-                    "format": "uri",
-                    "description": "URL to a Raster Form schema for manipulating tile URLs"
-                },
-                "eodash:jsonform": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "URL to a JSON Form schema for data processing configuration"
-                },
-                "eodash:vegadefinition": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "URL to a Vega or Vega-Lite chart definition for data visualization"
-                },
-                "eox:colorlegend": {
-                    "type": "object",
-                    "description": "Color legend configuration object",
-                    "properties": {
-                        "domain": {
-                            "type": "array",
-                            "items": {
-                                "type": "number"
-                            },
-                            "description": "Domain values for the color scale"
-                        },
-                        "width": {
-                            "type": "number",
-                            "description": "Width of the color legend"
-                        },
-                        "range": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            },
-                            "description": "Color values corresponding to domain"
-                        },
-                        "title": {
-                            "type": "string",
-                            "description": "Title for the color legend"
-                        },
-                        "tickFormat": {
-                            "oneOf": [
-                                {
-                                    "type": "string",
-                                    "description": "Format string for tick labels"
-                                },
-                                {
-                                    "type": "object",
-                                    "description": "Tick format configuration object"
-                                }
-                            ]
-                        },
-                        "ticks": {
-                            "oneOf": [
-                                {
-                                    "type": "number",
-                                    "description": "Number of ticks"
-                                },
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "number"
-                                    },
-                                    "description": "Array of tick values"
-                                }
-                            ]
-                        },
-                        "tickValues": {
-                            "type": "array",
-                            "items": {
-                                "type": "number"
-                            },
-                            "description": "Explicit tick values"
-                        },
-                        "scaleType": {
-                            "type": "string",
-                            "enum": [
-                                "linear",
-                                "log",
-                                "pow",
-                                "sqrt",
-                                "symlog",
-                                "continuous",
-                                "discrete"
-                            ],
-                            "description": "Type of scale to use"
-                        },
-                        "markType": {
-                            "type": "string",
-                            "description": "Type of mark for the legend"
-                        }
-                    },
-                    "required": [
-                        "domain",
-                        "range"
-                    ]
-                },
-                "eox:flatstyle": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "URL to an OpenLayers Flat Style definition"
-                }
-            }
-        },
-        "link_fields": {
-            "$comment": "Fields that can appear in Links.",
-            "type": "object",
-            "properties": {
-                "eodash:proj4_def": {
-                    "$ref": "#/definitions/projection_object",
-                    "description": "Proj4 projection definition for coordinate reference system"
-                },
-                "asset:keys": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "Array of asset keys that this link applies to (used with rel: style)"
-                },
-                "eox:flatstyle": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "URL to an OpenLayers Flat Style definition"
-                }
-            }
-        },
-        "projection_object": {
-            "type": "object",
-            "description": "Projection configuration for map display",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "A unique identifier for the projection (e.g., 'EPSG:3031' or 'ORTHO:320500')"
-                },
-                "def": {
-                    "type": "string",
-                    "description": "The Proj4 definition string specifying the projection parameters"
-                },
-                "extent": {
-                    "type": "array",
-                    "items": {
-                        "type": "number"
-                    },
-                    "minItems": 4,
-                    "maxItems": 4,
-                    "description": "The valid coordinate bounds as [minX, minY, maxX, maxY] in the projection's units"
-                }
-            },
-            "required": [
-                "name",
-                "def"
-            ]
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eodash.github.io/eodash-extension/v0.2.0/schema.json#",
+  "title": "Interactive Dashboards (eodash) Extension",
+  "description": "STAC Interactive Dashboards (eodash) Extension for STAC Catalogs, STAC Collections and STAC Items.",
+  "type": "object",
+  "required": [
+    "stac_extensions",
+    "type"
+  ],
+  "properties": {
+    "stac_extensions": {
+      "type": "array",
+      "contains": {
+        "const": "https://eodash.github.io/eodash-extension/v0.2.0/schema.json"
+      }
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Catalog",
+        "Collection",
+        "Feature"
+      ]
+    },
+    "assets": {
+      "$comment": "This validates the fields in Item and Collection Assets, but does not require them.",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/assetAndLinkFields"
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/assetAndLinkFields"
+      }
+    },
+    "assetTemplates": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/assetAndLinkFields"
+      }
+    },
+    "linkTemplates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/assetAndLinkFields"
+      }
     }
+  },
+  "oneOf": [
+    {
+      "$comment": "This is the schema for STAC Items.",
+      "type": "object",
+      "required": [
+        "type",
+        "properties"
+      ],
+      "properties": {
+        "type": {
+          "const": "Feature"
+        },
+        "properties": {
+          "$ref": "#/definitions/topLevelFields"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/noFields"
+        }
+      ]
+    },
+    {
+      "$comment": "This is the schema for top-level fields and item assets in STAC Collections.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "Collection"
+        },
+        "item_assets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/assetAndLinkFields"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/topLevelFields"
+        }
+      ]
+    },
+    {
+      "$comment": "This is the schema for STAC Catalogs. Catalogs don't have top-level fields.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "Catalog"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/noFields"
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "eodash:mapProjection": {
+      "type": "object",
+      "required": [
+        "name",
+        "def"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "def": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extent": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "eodash:jsonform": {
+      "type": "string",
+      "format": "uri"
+    },
+    "eodash:rasterform": {
+      "type": "string",
+      "format": "uri"
+    },
+    "eodash:vegadefinition": {
+      "type": "string",
+      "format": "uri"
+    },
+    "eodash:colorlegend": {
+      "type": "object",
+      "required": [
+        "domain",
+        "range"
+      ],
+      "properties": {
+        "domain": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "range": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scaleType": {
+          "type": "string",
+          "enum": [
+            "linear",
+            "log",
+            "pow",
+            "sqrt",
+            "symlog",
+            "continuous",
+            "discrete"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "tickFormat": {
+          "type": [
+            "string",
+            "object"
+          ]
+        },
+        "width": {
+          "type": "number"
+        },
+        "ticks": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ]
+        },
+        "tickValues": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "markType": {
+          "type": "string"
+        }
+      }
+    },
+    "eodash:flatstyle": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "topLevelFields": {
+      "$comment": "Fields allowed at the top-level of Collections and in Item properties.",
+      "type": "object",
+      "properties": {
+        "eodash:mapProjection": {
+          "$ref": "#/definitions/eodash:mapProjection"
+        },
+        "eodash:jsonform": {
+          "$ref": "#/definitions/eodash:jsonform"
+        },
+        "eodash:rasterform": {
+          "$ref": "#/definitions/eodash:rasterform"
+        },
+        "eodash:vegadefinition": {
+          "$ref": "#/definitions/eodash:vegadefinition"
+        },
+        "eodash:colorlegend": {
+          "$ref": "#/definitions/eodash:colorlegend"
+        },
+        "eodash:flatstyle": {
+          "$ref": "#/definitions/eodash:flatstyle"
+        }
+      },
+      "patternProperties": {
+        "^(?!eodash:)": {}
+      },
+      "additionalProperties": false
+    },
+    "assetAndLinkFields": {
+      "$comment": "Fields allowed in Assets, Item Asset Definitions, Asset Templates, Links and Link Templates.",
+      "type": "object",
+      "properties": {
+        "eodash:flatstyle": {
+          "$ref": "#/definitions/eodash:flatstyle"
+        }
+      },
+      "patternProperties": {
+        "^(?!eodash:)": {}
+      },
+      "additionalProperties": false
+    },
+    "noFields": {
+      "$comment": "Disallows all fields of this extension.",
+      "type": "object",
+      "patternProperties": {
+        "^(?!eodash:)": {}
+      },
+      "additionalProperties": false
+    }
+  }
 }
